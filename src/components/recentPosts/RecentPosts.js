@@ -52,7 +52,7 @@ const RecentPosts = () => {
       name: "Followers",
     },
     {
-      id: 1,
+      id: 4,
       icon: <FaInstagram />,
       like: "3k",
       name: "Followers",
@@ -86,7 +86,7 @@ const RecentPosts = () => {
         <div className="grid grid-cols-2 gap-3 mt-12">
           {recentTrendData[0]?.recentData?.map((recentTrend, idx) => (
             <div
-              key={recentData?.id}
+              key={idx}
               className={` group relative cursor-pointer  ${
                 idx === 0 ? "col-span-2 row-span-2" : " col-span-1 row-span-1"
               }`}
