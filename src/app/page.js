@@ -24,7 +24,7 @@ export default function Home() {
       <div className="w-[1200px] mx-auto">
         <RecentPosts />
       </div>
-<RecentVideo/>
+      <RecentVideo />
     </>
 
   );

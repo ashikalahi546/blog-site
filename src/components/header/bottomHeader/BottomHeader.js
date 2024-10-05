@@ -35,7 +35,21 @@ const BottomHeader = () => {
   handleOutSideClickEvent(briefcaseModalRef, setBriefcase);
 
 
-//   modalOpen
+
+  const [hovered, setHovered] = useState(null)
+
+  const closeTimeRef =useRef(null)
+
+const handleMouseEnter =(index)=>{
+  clearTimeout(closeTimeRef.current)
+  setHovered(index)
+}
+  const handleMouseLeave =()=>{
+    closeTimeRef.current = setTimeout(()=>{
+      setHovered(null)
+    },2000)
+  }
+  //   modalOpen
   const handleIcon = (item) => {
     if (item?.action === "BiSearch") {
       setOpenSearchbar(!openSearchbar);
@@ -47,7 +61,7 @@ const BottomHeader = () => {
   };
 
 
-// modalClose
+  // modalClose
   const handleClose = (item) => {
     if (item === "BiSearch") {
       setOpenSearchbar(false);
@@ -70,13 +84,24 @@ const BottomHeader = () => {
         />
 
         <nav>
-          <ul className="flex gap-x-5 ">
-            {navberData?.map((nav) => (
+          <ul className="flex gap-x-5 relative h-[43px] items-center">
+            {navberData?.map((menu, menuIndex) => (
               <li
-                key={nav?.id}
-                className="text-white z-10 leading-5 cursor-pointer font-medium hover:text-[#DC2F15] duration-300 tracking-wide"
-              >
-                <div>{nav?.title}</div>
+                onMouseEnter={() => handleMouseEnter(menuIndex)}
+                onMouseLeave={() => handleMouseLeave()}
+                key={menuIndex}
+                className={`text-white z-10 leading-5 cursor-pointer font-medium
+                 hover:text-[#DC2F15]  transition-all  tracking-wide ${hovered ? "duration-500" : "duration-1000"}`}>
+                <div>{menu?.title}</div>
+                {hovered === menuIndex && menu?.submenus && (
+                  <ul className="absolute top-16  -translate-x-[31.8%]  lg:w-[1200px] bg-red-500">
+                    {menu?.submenus?.map((submenu, subIndex) => (
+                      <li key={subIndex}>
+                        <span className="text-orange-500">   {submenu?.title}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
@@ -90,20 +115,18 @@ const BottomHeader = () => {
             <button
               onClick={() => handleIcon(item)}
               key={index}
-              className={`text-xl hover:text-[#DC2F15] duration-300 ${
-                openSearchbar && item?.action === "BiSearch"
-                  ? "invisible"
-                  : "visible"
-              }`}
+              className={`text-xl hover:text-[#DC2F15] duration-300 ${openSearchbar && item?.action === "BiSearch"
+                ? "invisible"
+                : "visible"
+                }`}
             >
-                 {item.icon}
-              <div       className="relative group z-10 ">
-                <div     
-                  className={`  ${
-                    item?.action === "RiBriefcase2Line"
-                      ? "absolute size-4 text-xs -bottom-1.5 group-hover:text-white text-white -right-1 bg-[#E93314] rounded-full"
-                      : null
-                  }`}
+              {item.icon}
+              <div className="relative group z-10 ">
+                <div
+                  className={`  ${item?.action === "RiBriefcase2Line"
+                    ? "absolute size-4 text-xs -bottom-1.5 group-hover:text-white text-white -right-1 bg-[#E93314] rounded-full"
+                    : null
+                    }`}
                 >
                   {item?.action === "RiBriefcase2Line" && 0}
                 </div>
@@ -116,11 +139,10 @@ const BottomHeader = () => {
       {/* /* seachModal */}
 
       <div
-        className={` fixed top-0 duration-500  bg-[#121418]  w-full   transition-all  ease-out  ${
-          openSearchbar
-            ? "scale-100 opacity-100  z-20  visible"
-            : "scale-95  opacity-0 invisible"
-        }`}
+        className={` fixed top-0 duration-500  bg-[#121418]  w-full   transition-all  ease-out  ${openSearchbar
+          ? "scale-100 opacity-100  z-20  visible"
+          : "scale-95  opacity-0 invisible"
+          }`}
       >
         {openSearchbar && (
           <SearchModal
@@ -131,21 +153,20 @@ const BottomHeader = () => {
       </div>
 
       {/* briefcaseModal */}
- 
-        <div
-          className={`bg-[#121418] size-80 right-5  absolute   transition-all transform duration-500 ease-in-out  ${
-            briefcase ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible"
+
+      <div
+        className={`bg-[#121418] size-80 right-5  absolute   transition-all transform duration-500 ease-in-out  ${briefcase ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible"
           }`}
-        >
-          {briefcase && (
-            <BriefcaseModal
-              handleClose={handleClose}
-        //    briefcaseModalRef={briefcaseModalRef}
-            />
-          )}
-        </div>
+      >
+        {briefcase && (
+          <BriefcaseModal
+            handleClose={handleClose}
+          //    briefcaseModalRef={briefcaseModalRef}
+          />
+        )}
       </div>
-  
+    </div>
+
   );
 };
 

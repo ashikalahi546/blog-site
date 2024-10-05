@@ -86,18 +86,6 @@ const RecentVideo = () => {
                 onClick={handlePlay}
               />
 
-          {/* <div className="absolute top-0 w-full">
-          <div className="h-[600px] flex flex-col justify-center items-center">
-            <button
-          
-              className="bg-white size-14 rounded-full flex items-center justify-center hover:bg-[#E93314] 
-                duration-300 hover:scale-125 hover:text-white transition-all"
-            >
-              <BsFillCaretRightFill />
-            </button>
-          </div>
-   
-    </div> */}
             </div>
           )}
         </div>
@@ -108,9 +96,8 @@ const RecentVideo = () => {
             <div
               onClick={() => handleClick(recentVideo)}
               key={recentVideo?.id}
-              className={`relative transition-transform duration-500 ease-in-out transform ${
-                current.id === recentVideo.id ? "scale-105" : "scale-100"
-              }`}
+              className={`relative transition-transform duration-500 ease-in-out transform ${current.id === recentVideo.id ? "scale-105" : "scale-100"
+                }`}
             >
               <Image
                 src={recentVideo?.image}
@@ -120,20 +107,19 @@ const RecentVideo = () => {
                 className="object-cover transition-opacity duration-500 ease-in-out"
               />
               <div
-                className={`absolute inset-0 top-0 ${
-                  current.id === recentVideo.id
+                className={`absolute inset-0 top-0 ${current.id === recentVideo.id
                     ? "bg-black/50"
                     : "bg-[#121418]/20"
-                }`}
+                  }`}
               ></div>
             </div>
           ))}
         </div>
       </div>
-</div>
-    
-     
-      
+    </div>
+
+
+
   );
 };
 
